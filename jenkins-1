@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    tools {
+        nodejs 'node'
+    }
+    stages {
+        stage('Node Version') {
+            // Check node version
+            steps {
+                sh 'node -v'
+            }
+        }
+        stage('Clone') {
+            steps {
+                // Checkout code from GitHub
+                git url: 'https://github.com/QueSchoenenberger/m324-TrafficLight.git', 
+                branch: 'main'
+            }
+        }
+        stage('Install jest-cli') {
+            steps {
+                echo 'Installing jest-cli'
+                // Install jest-cli
+                sh 'npm install jest-cli -g'
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+                echo 'Installing required dependencies...'
+                // Install dependencies, e.g., for Node.js apps
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Run tests, e.g., for Node.js apps
+                sh 'npm test'
+            }
+        }
+    }
+}
